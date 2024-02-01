@@ -1,6 +1,8 @@
 from tkinter import*
 import tkinter as tk
 from PIL import Image,ImageTk
+import os
+from student_detail import student_details
 
 
 class Face_Recognition_Attendance:
@@ -30,10 +32,10 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_student = ImageTk.PhotoImage(image_student)
         Studen_button = Button(bg_image,image=self.photoimage_student, cursor="hand2")
-        Studen_button.place(x=200,y=100,width=150,height=150)
+        Studen_button.place(x=270,y=100,width=150,height=150)
 
         Studen_button_text = Button(bg_image,text="Student details", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Studen_button_text.place(x=200,y=250,width=150,height=40)
+        Studen_button_text.place(x=270,y=250,width=150,height=40)
         
         # Detect face button
         image_detect = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\detect.jpg")
@@ -41,10 +43,10 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_detect = ImageTk.PhotoImage(image_detect)
         Detect_button = Button(bg_image,image=self.photoimage_detect, cursor="hand2")
-        Detect_button.place(x=400,y=100,width=150,height=150)
+        Detect_button.place(x=480,y=100,width=150,height=150)
 
         Detect_button_text = Button(bg_image,text="Face detector", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Detect_button_text.place(x=400,y=250,width=150,height=40)
+        Detect_button_text.place(x=480,y=250,width=150,height=40)
         
         # Attendance button
         image_attendance = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\attendance.jpg")
@@ -52,10 +54,10 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_attendance = ImageTk.PhotoImage(image_attendance)
         Attendance_button = Button(bg_image,image=self.photoimage_attendance, cursor="hand2")
-        Attendance_button.place(x=600,y=100,width=150,height=150)
+        Attendance_button.place(x=690,y=100,width=150,height=150)
 
         Attendance_button_text = Button(bg_image,text="Attendance", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Attendance_button_text.place(x=600,y=250,width=150,height=40)
+        Attendance_button_text.place(x=690,y=250,width=150,height=40)
         
         # Support button
         image_support = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\support.jpg")
@@ -63,21 +65,21 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_support = ImageTk.PhotoImage(image_support)
         Support_button = Button(bg_image,image=self.photoimage_support, cursor="hand2")
-        Support_button.place(x=800,y=100,width=150,height=150)
+        Support_button.place(x=900,y=100,width=150,height=150)
 
         Support_button_text = Button(bg_image,text="Support", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Support_button_text.place(x=800,y=250,width=150,height=40)
-        
+        Support_button_text.place(x=900,y=250,width=150,height=40)
+    #Line 2
         # Data training button
         image_data = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\Data_train.jpg")
         image_data = image_data.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_data = ImageTk.PhotoImage(image_data)
         Data_button = Button(bg_image,image=self.photoimage_data, cursor="hand2")
-        Data_button.place(x=200,y=300,width=150,height=150)
+        Data_button.place(x=270,y=370,width=150,height=150)
 
         Data_button_text = Button(bg_image,text="Data training", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Data_button_text.place(x=200,y=350,width=150,height=40)
+        Data_button_text.place(x=270,y=520,width=150,height=40)
         
         # Photo button
         image_photo = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\photo.png")
@@ -85,10 +87,10 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_photo = ImageTk.PhotoImage(image_photo)
         Photo_button = Button(bg_image,image=self.photoimage_photo, cursor="hand2")
-        Photo_button.place(x=400,y=300,width=150,height=150)
+        Photo_button.place(x=480,y=370,width=150,height=150)
 
         Photo_button_text = Button(bg_image,text="Photo", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Photo_button_text.place(x=400,y=350,width=150,height=40)
+        Photo_button_text.place(x=480,y=520,width=150,height=40)
         
         # Developer button
         image_developer = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\developer.jpg")
@@ -96,10 +98,10 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_developer  = ImageTk.PhotoImage(image_developer)
         Developer_button = Button(bg_image,image=self.photoimage_developer, cursor="hand2")
-        Developer_button.place(x=600,y=300,width=150,height=150)
+        Developer_button.place(x=690,y=370,width=150,height=150)
 
         Developer_button_text = Button(bg_image,text="Developer", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Developer_button_text.place(x=600,y=350,width=150,height=40)
+        Developer_button_text.place(x=690,y=520,width=150,height=40)
         
         # Exit button
         image_exit = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\exit.jpg")
@@ -107,10 +109,21 @@ class Face_Recognition_Attendance:
         # Convert the image to a PhotoImage object
         self.photoimage_exit = ImageTk.PhotoImage(image_exit)
         Exit_button = Button(bg_image,image=self.photoimage_exit, cursor="hand2")
-        Exit_button.place(x=800,y=300,width=150,height=150)
+        Exit_button.place(x=900,y=370,width=150,height=150)
 
         Exit_button_text = Button(bg_image,text="Exit", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
-        Exit_button_text.place(x=800,y=350,width=150,height=40)
+        Exit_button_text.place(x=900,y=520,width=150,height=40)
+        
+    # ==================Funtion for Open Images Folder==================
+    def open_img(self):
+        os.startfile("dataset")
+        
+    # ==================Functions Buttons=====================
+    def student_pannels(self):
+        self.new_window=Toplevel(self.root)
+        self.app=student_details(self.new_window)
+    def Close(self):
+        root.destroy()
 
 if __name__ == "__main__":
     root=Tk()
