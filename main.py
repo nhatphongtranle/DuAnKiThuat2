@@ -31,10 +31,10 @@ class Face_Recognition_Attendance:
         image_student = image_student.resize((170,170),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_student = ImageTk.PhotoImage(image_student)
-        Studen_button = Button(bg_image,image=self.photoimage_student, cursor="hand2")
+        Studen_button = Button(bg_image,command=self.student_pannels,image=self.photoimage_student, cursor="hand2")
         Studen_button.place(x=270,y=100,width=150,height=150)
 
-        Studen_button_text = Button(bg_image,text="Student details", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
+        Studen_button_text = Button(bg_image,command=self.student_pannels,text="Student details", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
         Studen_button_text.place(x=270,y=250,width=150,height=40)
         
         # Detect face button
