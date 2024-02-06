@@ -2,7 +2,7 @@ from tkinter import*
 import tkinter as tk
 from PIL import Image,ImageTk
 import os
-from student_detail import student_details
+from Student import Student
 
 
 class Face_Recognition_Attendance:
@@ -121,7 +121,7 @@ class Face_Recognition_Attendance:
     # ==================Functions Buttons=====================
     def student_pannels(self):
         self.new_window=Toplevel(self.root)
-        self.app=student_details(self.new_window)
+        self.app=Student(self.new_window)
     def Close(self):
         root.destroy()
 
