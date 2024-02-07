@@ -1,4 +1,5 @@
 README.md
 .git
-__pycache__/student_detail.cpython-312.pyc
+__pycache__
+#__pycache__/student_detail.cpython-312.pyc
 __pycache__/Student.cpython-312.pyc
