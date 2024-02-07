@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
+import mysql.connector
 
 class Student:
     def __init__(self,root):
@@ -186,7 +187,7 @@ class Student:
         btn_frame.place(x=10,y=390,width=635,height=60)
 
         #save button
-        save_btn=Button(btn_frame,text="Save",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        save_btn=Button(btn_frame,command=self.add_data,text="Save",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         save_btn.grid(row=0,column=0,padx=5,pady=10,sticky=W)
 
         #update button
@@ -297,6 +298,37 @@ class Student:
         self.student_table.pack(fill=BOTH,expand=1)
 
         #------------------------------------------#
+        
+        # ==================Function Decleration==============================
+    def add_data(self):
+        if self.var_dep.get()=="Select Department" or self.var_course.get=="Select Course" or self.var_year.get()=="Select Year" or self.var_semester.get()=="Select Semester" or self.var_std_id.get()=="" or self.var_std_name.get()=="" or self.var_div.get()=="" or self.var_roll.get()=="" or self.var_gender.get()=="" or self.var_dob.get()=="" or self.var_email.get()=="" or self.var_mob.get()=="" or self.var_address.get()=="" or self.var_teacher.get()=="":
+            messagebox.showerror("Error","Please Fill All Fields are Required!",parent=self.root)
+        else:
+            try:
+                conn = mysql.connector.connect(username='root', password='Phong40664869@',host='localhost',database='face_recognition',port=3300)
+                mycursor = conn.cursor()
+                mycursor.execute("insert into student values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+                self.var_std_id.get(),
+                self.var_std_name.get(),
+                self.var_dep.get(),
+                self.var_course.get(),
+                self.var_year.get(),
+                self.var_semester.get(),
+                self.var_div.get(),
+                self.var_gender.get(),
+                self.var_dob.get(),
+                self.var_mob.get(),
+                self.var_address.get(),
+                self.var_roll.get(),
+                self.var_email.get(),
+                self.var_teacher.get(),
+                self.var_radio1.get()
+                ))
+                conn.commit()
+                conn.close()
+                messagebox.showinfo("Success","All Records are Saved!",parent=self.root)
+            except Exception as es:
+                messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)
 if __name__ == "__main__":
     root=Tk()
     obj=Student(root)
