@@ -34,20 +34,19 @@ class Student:
         # Create the label with the PhotoImage object
         bg_image = Label(self.root, image= self.photoimage)
         bg_image.place(x=0,y=0,width=1380,height=770)
-    
-        # Title
-        title_lbl = Label(text = "STUDENT MANAGEMENT SYSTEM", font = ("times new roman",20, "bold"), bg="brown", fg="red")
-        title_lbl.place(x=0,y=0,width=1400,height=55)
-       
+
+        #title section
+        title_lb1 = Label(bg_image,text="Welcome to Student Pannel",font=("verdana",30,"bold"),bg="white",fg="navyblue")
+        title_lb1.place(x=0,y=0,width=1366,height=45)
+
         # Creating Frame 
-        main_frame = Frame(bg_image,bd="0", bg="white") #bd mean border 
-        main_frame.place(x=-1,y=0,width=1370,height=1370)
-        
-        # Left label frame
+        main_frame = Frame(bg_image,bd=2,bg="white") #bd mean border 
+        main_frame.place(x=5,y=55,width=1355,height=510)
+
+        # Left Label Frame 
         left_frame = LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Student Details",font=("verdana",12,"bold"),fg="navyblue")
-        left_frame.place(x=-2,y=70,width=660,height=480)
-        
-        #--------------CURRENT COURSE------------------------#
+        left_frame.place(x=10,y=10,width=660,height=480)
+
         # Current Course 
         current_course_frame = LabelFrame(left_frame,bd=2,bg="white",relief=RIDGE,text="Current Course",font=("verdana",12,"bold"),fg="navyblue")
         current_course_frame.place(x=10,y=5,width=635,height=150)
@@ -57,10 +56,12 @@ class Student:
         dep_label.grid(row=0,column=0,padx=5,pady=15)
 
         #combo box 
-        dep_combo= ttk.Combobox(current_course_frame,textvariable=self.var_dep,width=15,font=("verdana",12,"bold"),state="readonly")
+        dep_combo=ttk.Combobox(current_course_frame,textvariable=self.var_dep,width=15,font=("verdana",12,"bold"),state="readonly")
         dep_combo["values"]=("Select Department","BSCS","BSIT","BSENG","BSPHY","BSMATH")
         dep_combo.current(0)
         dep_combo.grid(row=0,column=1,padx=5,pady=15,sticky=W)
+
+        # -----------------------------------------------------
 
         #label Course
         cou_label=Label(current_course_frame,text="Course",font=("verdana",12,"bold"),bg="white",fg="navyblue")
@@ -72,6 +73,8 @@ class Student:
         cou_combo.current(0)
         cou_combo.grid(row=0,column=3,padx=5,pady=15,sticky=W)
 
+        #-------------------------------------------------------------
+
         #label Year
         year_label=Label(current_course_frame,text="Year",font=("verdana",12,"bold"),bg="white",fg="navyblue")
         year_label.grid(row=1,column=0,padx=5,sticky=W)
@@ -82,6 +85,8 @@ class Student:
         year_combo.current(0)
         year_combo.grid(row=1,column=1,padx=5,pady=15,sticky=W)
 
+        #-----------------------------------------------------------------
+
         #label Semester 
         year_label=Label(current_course_frame,text="Semester",font=("verdana",12,"bold"),bg="white",fg="navyblue")
         year_label.grid(row=1,column=2,padx=5,sticky=W)
@@ -91,10 +96,7 @@ class Student:
         year_combo["values"]=("Select Semester","Semester-1","Semester-2","Semester-3","Semester-4","Semester-5","Semester-6","Semester-7","Semester-8")
         year_combo.current(0)
         year_combo.grid(row=1,column=3,padx=5,pady=15,sticky=W)
-        
-        #-------------------------------------------#
-        
-        #--------------CLASS STUDENT INFORMATION------------------------#
+
         #Class Student Information
         class_Student_frame = LabelFrame(left_frame,bd=2,bg="white",relief=RIDGE,text="Class Student Information",font=("verdana",12,"bold"),fg="navyblue")
         class_Student_frame.place(x=10,y=160,width=635,height=230)
@@ -191,7 +193,7 @@ class Student:
         save_btn.grid(row=0,column=0,padx=5,pady=10,sticky=W)
 
         #update button
-        update_btn=Button(btn_frame,text="Update",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        update_btn=Button(btn_frame,command=self.update_data,text="Update",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         update_btn.grid(row=0,column=1,padx=5,pady=8,sticky=W)
 
         #delete button
@@ -209,14 +211,16 @@ class Student:
         #update photo button
         update_photo_btn=Button(btn_frame,text="Update Pic",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         update_photo_btn.grid(row=0,column=5,padx=5,pady=10,sticky=W)
-        
-        #-------------------------------------------#
-        
+
+
+
+
+
+        #----------------------------------------------------------------------
         # Right Label Frame 
         right_frame = LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Student Details",font=("verdana",12,"bold"),fg="navyblue")
-        right_frame.place(x=680,y=70,width=710,height=480)
-        
-        #-----------------SEARCH SYSTEM--------------------------#
+        right_frame.place(x=680,y=10,width=660,height=480)
+
         #Searching System in Right Label Frame 
         search_frame = LabelFrame(right_frame,bd=2,bg="white",relief=RIDGE,text="Search System",font=("verdana",12,"bold"),fg="navyblue")
         search_frame.place(x=10,y=5,width=635,height=80)
@@ -238,10 +242,10 @@ class Student:
         search_btn=Button(search_frame,text="Search",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         search_btn.grid(row=0,column=3,padx=5,pady=10,sticky=W)
 
-        showAll_btn=Button(search_frame,text="Show All",width=8,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        showAll_btn=Button(search_frame,command=self.fetch_data,text="Show All",width=8,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         showAll_btn.grid(row=0,column=4,padx=5,pady=10,sticky=W)
 
-        #----------------Table Frame------------------------#
+        # -----------------------------Table Frame-------------------------------------------------
         #Table Frame 
         #Searching System in Right Label Frame 
         table_frame = Frame(right_frame,bd=2,bg="white",relief=RIDGE)
@@ -250,7 +254,7 @@ class Student:
         #scroll bar 
         scroll_x = ttk.Scrollbar(table_frame,orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(table_frame,orient=VERTICAL)
-        
+
         #create table 
         self.student_table = ttk.Treeview(table_frame,column=("ID","Name","Dep","Course","Year","Sem","Div","Gender","DOB","Mob-No","Address","Roll-No","Email","Teacher","Photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
 
@@ -296,6 +300,8 @@ class Student:
 
 
         self.student_table.pack(fill=BOTH,expand=1)
+        self.student_table.bind("<ButtonRelease>",self.get_cursor)
+        self.fetch_data()
 
         #------------------------------------------#
         
@@ -325,10 +331,87 @@ class Student:
                 self.var_radio1.get()
                 ))
                 conn.commit()
+                self.fetch_data()
                 conn.close()
                 messagebox.showinfo("Success","All Records are Saved!",parent=self.root)
             except Exception as es:
                 messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)
+
+    # ===========================Fetch data form database to table ================================
+
+    def fetch_data(self):
+        conn = mysql.connector.connect(username='root', password='Phong40664869@',host='localhost',database='face_recognition',port=3300)
+        mycursor = conn.cursor()
+
+        mycursor.execute("select * from student")
+        data=mycursor.fetchall()
+
+        if len(data)!= 0:
+            self.student_table.delete(*self.student_table.get_children())
+            for i in data:
+                self.student_table.insert("",END,values=i)
+            conn.commit()
+        conn.close()
+
+    #================================get cursor function=======================
+
+    def get_cursor(self,event=""):
+        cursor_focus = self.student_table.focus()
+        content = self.student_table.item(cursor_focus)
+        data = content["values"]
+
+        self.var_std_id.set(data[0]),
+        self.var_std_name.set(data[1]),
+        self.var_dep.set(data[2]),
+        self.var_course.set(data[3]),
+        self.var_year.set(data[4]),
+        self.var_semester.set(data[5]),
+        self.var_div.set(data[6]),
+        self.var_gender.set(data[7]),
+        self.var_dob.set(data[8]),
+        self.var_mob.set(data[9]),
+        self.var_address.set(data[10]),
+        self.var_roll.set(data[11]),
+        self.var_email.set(data[12]),
+        self.var_teacher.set(data[13]),
+        self.var_radio1.set(data[14])
+    # ========================================Update Function==========================
+    def update_data(self):
+        if self.var_dep.get()=="Select Department" or self.var_course.get=="Select Course" or self.var_year.get()=="Select Year" or self.var_semester.get()=="Select Semester" or self.var_std_id.get()=="" or self.var_std_name.get()=="" or self.var_div.get()=="" or self.var_roll.get()=="" or self.var_gender.get()=="" or self.var_dob.get()=="" or self.var_email.get()=="" or self.var_mob.get()=="" or self.var_address.get()=="" or self.var_teacher.get()=="":
+            messagebox.showerror("Error","Please Fill All Fields are Required!",parent=self.root)
+        else:
+            try:
+                Update=messagebox.askyesno("Update","Do you want to Update this Student Details!",parent=self.root)
+                if Update > 0:
+                    conn = mysql.connector.connect(username='root', password='Phong40664869@',host='localhost',database='face_recognition',port=3300)
+                    mycursor = conn.cursor()
+                    mycursor.execute("update student set Name=%s,Department=%s,Course=%s,Year=%s,Semester=%s,Division=%s,Gender=%s,DOB=%s,Mobile_No=%s,Address=%s,Roll_No=%s,Email=%s,Teacher_Name=%s,PhotoSample=%s where Student_ID=%s",( 
+                    self.var_std_name.get(),
+                    self.var_dep.get(),
+                    self.var_course.get(),
+                    self.var_year.get(),
+                    self.var_semester.get(),
+                    self.var_div.get(),
+                    self.var_gender.get(),
+                    self.var_dob.get(),
+                    self.var_mob.get(),
+                    self.var_address.get(),
+                    self.var_roll.get(),
+                    self.var_email.get(),
+                    self.var_teacher.get(),
+                    self.var_radio1.get(),
+                    self.var_std_id.get()   
+                    ))
+                else:
+                    if not Update:
+                        return
+                messagebox.showinfo("Success","Successfully Updated!",parent=self.root)
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+            except Exception as es:
+                messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)
+
 if __name__ == "__main__":
     root=Tk()
     obj=Student(root)
