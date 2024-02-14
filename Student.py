@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
 import mysql.connector
+import cv2
 
 class Student:
     def __init__(self,root):
@@ -35,7 +36,7 @@ class Student:
         bg_image = Label(self.root, image= self.photoimage)
         bg_image.place(x=0,y=0,width=1380,height=770)
 
-        #title section
+         #title section
         title_lb1 = Label(bg_image,text="Welcome to Student Pannel",font=("verdana",30,"bold"),bg="white",fg="navyblue")
         title_lb1.place(x=0,y=0,width=1366,height=45)
 
@@ -197,15 +198,15 @@ class Student:
         update_btn.grid(row=0,column=1,padx=5,pady=8,sticky=W)
 
         #delete button
-        del_btn=Button(btn_frame,text="Delete",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        del_btn=Button(btn_frame,command=self.delete_data,text="Delete",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         del_btn.grid(row=0,column=2,padx=5,pady=10,sticky=W)
 
         #reset button
-        reset_btn=Button(btn_frame,text="Reset",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        reset_btn=Button(btn_frame,command=self.reset_data,text="Reset",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         reset_btn.grid(row=0,column=3,padx=5,pady=10,sticky=W)
 
         #take photo button
-        take_photo_btn=Button(btn_frame,text="Take Pic",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        take_photo_btn=Button(btn_frame,command=self.generate_dataset,text="Take Pic",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
         take_photo_btn.grid(row=0,column=4,padx=5,pady=10,sticky=W)
 
         #update photo button
@@ -411,6 +412,120 @@ class Student:
                 conn.close()
             except Exception as es:
                 messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)
+                
+  #======================Delete Function=================================#
+    def delete_data(self):
+        if self.var_std_id.get()=="":
+            messagebox.showerror("Error","Student Id Must be Required!",parent=self.root)
+        else:
+            try:
+                delete=messagebox.askyesno("Delete","Do you want to Delete?",parent=self.root)
+                if delete>0:
+                    conn = mysql.connector.connect(username='root', password='Phong40664869@',host='localhost',database='face_recognition',port=3300)
+                    mycursor = conn.cursor() 
+                    sql="delete from student where Student_ID=%s"
+                    val=(self.var_std_id.get(),)
+                    mycursor.execute(sql,val)
+                else:
+                    if not delete:
+                        return
+
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+                messagebox.showinfo("Delete","Successfully Deleted!",parent=self.root)
+            except Exception as es:
+                messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root)    
+
+    #=====================Reset Function==================#
+    def reset_data(self):
+        self.var_std_id.set(""),
+        self.var_std_name.set(""),
+        self.var_dep.set("Select Department"),
+        self.var_course.set("Select Course"),
+        self.var_year.set("Select Year"),
+        self.var_semester.set("Select Semester"),
+        self.var_div.set("Morning"),
+        self.var_gender.set("Male"),
+        self.var_dob.set(""),
+        self.var_mob.set(""),
+        self.var_address.set(""),
+        self.var_roll.set(""),
+        self.var_email.set(""),
+        self.var_teacher.set(""),
+        self.var_radio1.set("")
+        
+    #===================This part is related to Opencv Camera part=======================#
+    #===================Generate Data set take image========================#
+    def generate_dataset(self):
+        if self.var_dep.get()=="Select Department" or self.var_course.get=="Select Course" or self.var_year.get()=="Select Year" or self.var_semester.get()=="Select Semester" or self.var_std_id.get()=="" or self.var_std_name.get()=="" or self.var_div.get()=="" or self.var_roll.get()=="" or self.var_gender.get()=="" or self.var_dob.get()=="" or self.var_email.get()=="" or self.var_mob.get()=="" or self.var_address.get()=="" or self.var_teacher.get()=="":
+            messagebox.showerror("Error","Please Fill All Fields are Required!",parent=self.root)
+        else:
+            try:
+                
+                conn = mysql.connector.connect(username='root', password='Phong40664869@',host='localhost',database='face_recognition',port=3300)
+                mycursor = conn.cursor()
+                mycursor.execute("select * from student")
+                myreslut = mycursor.fetchall()
+                id=0
+                for x in myreslut:
+                    id+=1
+
+                mycursor.execute("update student set Name=%s,Department=%s,Course=%s,Year=%s,Semester=%s,Division=%s,Gender=%s,DOB=%s,Mobile_No=%s,Address=%s,Roll_No=%s,Email=%s,Teacher=%s,Photo=%s where Student_ID=%s",( 
+                    self.var_std_name.get(),
+                    self.var_dep.get(),
+                    self.var_course.get(),
+                    self.var_year.get(),
+                    self.var_semester.get(),
+                    self.var_div.get(),
+                    self.var_gender.get(),
+                    self.var_dob.get(),
+                    self.var_mob.get(),
+                    self.var_address.get(),
+                    self.var_roll.get(),
+                    self.var_email.get(),
+                    self.var_teacher.get(),
+                    self.var_radio1.get(),
+                    self.var_std_id.get()==id+1   
+                    ))
+                conn.commit()
+                self.fetch_data()
+                self.reset_data()
+                conn.close()
+
+                # ====================part of opencv=======================
+
+                face_classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
+                def face_croped(img):
+                    # conver gary sacle
+                    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                    faces = face_classifier.detectMultiScale(gray,1.3,5)
+                    #Scaling factor 1.3
+                    # Minimum naber 5
+                    for (x,y,w,h) in faces:
+                        face_croped=img[y:y+h,x:x+w]
+                        return face_croped
+                cap=cv2.VideoCapture(0)
+                img_id=0
+                while True:
+                    ret,my_frame=cap.read()
+                    if face_croped(my_frame) is not None:
+                        img_id+=1
+                        face=cv2.resize(face_croped(my_frame),(200,200))
+                        face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
+                        file_path="data_img/student."+str(id)+"."+str(img_id)+".jpg"
+                        cv2.imwrite(file_path,face)
+                        cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)        
+                        cv2.imshow("Capture Images",face)
+
+                    if cv2.waitKey(1)==13 or int(img_id)==100:
+                        break
+                cap.release()
+                cv2.destroyAllWindows()
+                messagebox.showinfo("Result","Generating dataset completed!",parent=self.root)
+            except Exception as es:
+                messagebox.showerror("Error",f"Due to: {str(es)}",parent=self.root) 
 
 if __name__ == "__main__":
     root=Tk()
