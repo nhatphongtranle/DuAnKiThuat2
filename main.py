@@ -27,7 +27,7 @@ class Face_Recognition_Attendance:
     # Create buttons below the section 
         # Student button
         # Image
-        image_student = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\student.jpg")
+        image_student = Image.open(r"assets\student.jpg")
         image_student = image_student.resize((170,170),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_student = ImageTk.PhotoImage(image_student)
@@ -38,7 +38,7 @@ class Face_Recognition_Attendance:
         Studen_button_text.place(x=270,y=250,width=150,height=40)
         
         # Detect face button
-        image_detect = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\detect.jpg")
+        image_detect = Image.open(r"assets\detect.jpg")
         image_detect = image_detect.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_detect = ImageTk.PhotoImage(image_detect)
@@ -49,7 +49,7 @@ class Face_Recognition_Attendance:
         Detect_button_text.place(x=480,y=250,width=150,height=40)
         
         # Attendance button
-        image_attendance = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\attendance.jpg")
+        image_attendance = Image.open(r"assets\attendance.jpg")
         image_attendance = image_attendance.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_attendance = ImageTk.PhotoImage(image_attendance)
@@ -60,7 +60,7 @@ class Face_Recognition_Attendance:
         Attendance_button_text.place(x=690,y=250,width=150,height=40)
         
         # Support button
-        image_support = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\support.jpg")
+        image_support = Image.open(r"assets\support.jpg")
         image_support = image_support.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_support = ImageTk.PhotoImage(image_support)
@@ -71,7 +71,7 @@ class Face_Recognition_Attendance:
         Support_button_text.place(x=900,y=250,width=150,height=40)
     #Line 2
         # Data training button
-        image_data = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\Data_train.jpg")
+        image_data = Image.open(r"assets\Data_train.jpg")
         image_data = image_data.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_data = ImageTk.PhotoImage(image_data)
@@ -82,7 +82,7 @@ class Face_Recognition_Attendance:
         Data_button_text.place(x=270,y=520,width=150,height=40)
         
         # Photo button
-        image_photo = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\photo.png")
+        image_photo = Image.open(r"assets\photo.png")
         image_photo = image_photo.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_photo = ImageTk.PhotoImage(image_photo)
@@ -93,7 +93,7 @@ class Face_Recognition_Attendance:
         Photo_button_text.place(x=480,y=520,width=150,height=40)
         
         # Developer button
-        image_developer = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\developer.jpg")
+        image_developer = Image.open(r"assets\developer.jpg")
         image_developer  = image_developer.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_developer  = ImageTk.PhotoImage(image_developer)
@@ -104,7 +104,7 @@ class Face_Recognition_Attendance:
         Developer_button_text.place(x=690,y=520,width=150,height=40)
         
         # Exit button
-        image_exit = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\exit.jpg")
+        image_exit = Image.open(r"assets\exit.jpg")
         image_exit = image_exit.resize((200,200),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage_exit = ImageTk.PhotoImage(image_exit)
@@ -116,7 +116,7 @@ class Face_Recognition_Attendance:
         
     # ==================Funtion for Open Images Folder==================
     def open_img(self):
-        os.startfile("dataset")
+        os.startfile("data_img")
         
     # ==================Functions Buttons=====================
     def student_pannels(self):
