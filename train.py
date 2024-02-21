@@ -16,7 +16,7 @@ class Train:
         self.root.title("Train Pannel")
         
         #----------------------------------------#
-        image = Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\Background.png")
+        image = Image.open(r"assets\Background.png")
         image = image.resize((1530,750),Image.LANCZOS)
         # Convert the image to a PhotoImage object
         self.photoimage = ImageTk.PhotoImage(image)
@@ -27,10 +27,10 @@ class Train:
         title_lb1 = Label(bg_image,text="Welcome to Training Pannel",font=("verdana",30,"bold"),bg="white",fg="navyblue")
         title_lb1.place(x=0,y=0,width=1366,height=45)
         
-        # Create buttons below the section 
+    # Create buttons below the section 
         # ------------------------------------------------------------------------------------------------------------------- 
         # Training button 1
-        std_img_btn=Image.open(r"E:\Workspace\Project\FaceRecognitionSystem\assets\Background.png")
+        std_img_btn=Image.open(r"assets\Background.png")
         std_img_btn=std_img_btn.resize((180,180),Image.LANCZOS)
         self.std_img1=ImageTk.PhotoImage(std_img_btn)
 
@@ -64,10 +64,11 @@ class Train:
         #=================Train Classifier=============
         clf= cv2.face.LBPHFaceRecognizer_create()
         clf.train(faces,ids)
-        clf.write("classifỉe.xml")
+        clf.write("classifier.xml")
 
         cv2.destroyAllWindows()
         messagebox.showinfo("Result","Training Dataset Complated!",parent=self.root)
+
 
         
 if __name__ == "__main__":
