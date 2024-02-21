@@ -3,6 +3,8 @@ import tkinter as tk
 from PIL import Image,ImageTk
 import os
 from Student import Student
+from train import Train
+from Face_recognition import Face_recognition
 
 
 class Face_Recognition_Attendance:
@@ -45,7 +47,7 @@ class Face_Recognition_Attendance:
         Detect_button = Button(bg_image,image=self.photoimage_detect, cursor="hand2")
         Detect_button.place(x=480,y=100,width=150,height=150)
 
-        Detect_button_text = Button(bg_image,text="Face detector", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
+        Detect_button_text = Button(bg_image,command=self.face_rec,text="Face detector", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
         Detect_button_text.place(x=480,y=250,width=150,height=40)
         
         # Attendance button
@@ -78,7 +80,7 @@ class Face_Recognition_Attendance:
         Data_button = Button(bg_image,image=self.photoimage_data, cursor="hand2")
         Data_button.place(x=270,y=370,width=150,height=150)
 
-        Data_button_text = Button(bg_image,text="Data training", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
+        Data_button_text = Button(bg_image,command=self.train_pannels,text="Data training", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
         Data_button_text.place(x=270,y=520,width=150,height=40)
         
         # Photo button
@@ -122,6 +124,15 @@ class Face_Recognition_Attendance:
     def student_pannels(self):
         self.new_window=Toplevel(self.root)
         self.app=Student(self.new_window)
+        
+    def train_pannels(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Train(self.new_window)
+    
+    def face_rec(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Face_recognition(self.new_window)
+        
     def Close(self):
         root.destroy()
 
