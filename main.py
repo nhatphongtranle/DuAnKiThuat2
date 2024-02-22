@@ -5,6 +5,7 @@ import os
 from Student import Student
 from train import Train
 from Face_recognition import Face_recognition
+from attendance import Attendance
 
 
 class Face_Recognition_Attendance:
@@ -58,7 +59,7 @@ class Face_Recognition_Attendance:
         Attendance_button = Button(bg_image,image=self.photoimage_attendance, cursor="hand2")
         Attendance_button.place(x=690,y=100,width=150,height=150)
 
-        Attendance_button_text = Button(bg_image,text="Attendance", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
+        Attendance_button_text = Button(bg_image,command=self.attendance_pannel,text="Attendance", cursor="hand2", font = ("times new roman",15, "bold"), bg="darkblue", fg="white")
         Attendance_button_text.place(x=690,y=250,width=150,height=40)
         
         # Support button
@@ -132,6 +133,10 @@ class Face_Recognition_Attendance:
     def face_rec(self):
         self.new_window=Toplevel(self.root)
         self.app=Face_recognition(self.new_window)
+        
+    def attendance_pannel(self):
+        self.new_window=Toplevel(self.root)
+        self.app=Attendance(self.new_window)
         
     def Close(self):
         root.destroy()
