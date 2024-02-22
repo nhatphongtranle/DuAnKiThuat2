@@ -15,8 +15,7 @@ class Face_recognition:
         self.root=root
         self.root.geometry("1366x768+0+0")
         self.root.title("Face Recognition Pannel")
-        
-        #----------------------------------------#
+
         image = Image.open(r"assets\Background.png")
         image = image.resize((1530,750),Image.LANCZOS)
         # Convert the image to a PhotoImage object
@@ -24,14 +23,15 @@ class Face_recognition:
         # Create the label with the PhotoImage object
         bg_image = Label(self.root, image= self.photoimage)
         bg_image.place(x=0,y=0,width=1380,height=770)
+
         #title section
-        title_lb1 = Label(bg_image,text="Welcome to Training Pannel",font=("verdana",30,"bold"),bg="white",fg="navyblue")
+        title_lb1 = Label(bg_image,text="Welcome to Face Recognition Pannel",font=("verdana",30,"bold"),bg="white",fg="navyblue")
         title_lb1.place(x=0,y=0,width=1366,height=45)
-        
+
         # Create buttons below the section 
         # ------------------------------------------------------------------------------------------------------------------- 
         # Training button 1
-        std_img_btn=Image.open(r"assets\Background.png")
+        std_img_btn=Image.open(r"assets\detect.jpg")
         std_img_btn=std_img_btn.resize((180,180),Image.LANCZOS)
         self.std_img1=ImageTk.PhotoImage(std_img_btn)
 
@@ -40,6 +40,22 @@ class Face_recognition:
 
         std_b1_1 = Button(bg_image,command=self.face_recog,text="Face Detector",cursor="hand2",font=("tahoma",15,"bold"),bg="white",fg="navyblue")
         std_b1_1.place(x=600,y=350,width=180,height=45)
+        
+    #=====================Attendance===================
+    def mark_attendance(self,i,r,n):
+        with open("attendance.csv","r+",newline="\n") as f:
+            myDatalist=f.readlines()
+            name_list=[]
+            for line in myDatalist:
+                entry=line.split((","))
+                name_list.append(entry[0])
+
+            if((i not in name_list)) and ((r not in name_list)) and ((n not in name_list)):
+                now=datetime.now()
+                d1=now.strftime("%d/%m/%Y")
+                dtString=now.strftime("%H:%M:%S")
+                f.writelines(f"\n{i}, {r}, {n}, {dtString}, {d1}, Present")
+
 
     #================face recognition==================
     def face_recog(self):
@@ -75,6 +91,7 @@ class Face_recognition:
                     cv2.putText(img,f"Student_ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
                     cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
                     cv2.putText(img,f"Roll-No:{r}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(64,15,223),2)
+                    self.mark_attendance(i,r,n)
                 else:
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
                     cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,0),3)    
@@ -93,18 +110,21 @@ class Face_recognition:
         clf=cv2.face.LBPHFaceRecognizer_create()
         clf.read("classifier.xml")
 
-        videoCap=cv2.VideoCapture(0)
+        video_Cap=cv2.VideoCapture(0)
 
         while True:
-            ret,img=videoCap.read()
+            ret,img=video_Cap.read()
             img=recognize(img,clf,faceCascade)
             cv2.imshow("Face Detector",img)
 
             if cv2.waitKey(1) == 13:
-                break
-        videoCap.release()
+              break
+        video_Cap.release()
         cv2.destroyAllWindows()
-        
+
+
+
+
 if __name__ == "__main__":
     root=Tk()
     obj=Face_recognition(root)
